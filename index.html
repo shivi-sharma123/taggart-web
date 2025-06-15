@@ -1,0 +1,2168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Taggart Advisors Hero</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom right, #cceeff, #e0f7ff);
+      overflow-x: hidden;
+      color: #000;
+      scroll-behavior: smooth;
+    }
+
+    /* Navbar Styles */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 15px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .navbar.scrolled {
+      padding: 10px 5%;
+      background: rgba(255, 255, 255, 0.95);
+    }
+
+    .navbar-logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #0099cc;
+      text-decoration: none;
+    }
+
+    .navbar-links {
+      display: flex;
+      gap: 30px;
+    }
+
+    .navbar-links a {
+      color: #004d66;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+
+    .navbar-links a:hover {
+      color: #00aaff;
+    }
+
+    .navbar-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: #00aaff;
+      transition: width 0.3s ease;
+    }
+
+    .navbar-links a:hover::after {
+      width: 100%;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: #004d66;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .navbar-links {
+        position: fixed;
+        top: 60px;
+        right: -100%;
+        width: 70%;
+        height: 100vh;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        padding: 50px 30px;
+        transition: right 0.3s ease;
+        gap: 20px;
+      }
+
+      .navbar-links.active {
+        right: 0;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+    }
+
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 160px 5% 80px;
+      /* Adjusted padding to account for navbar */
+      min-height: 100vh;
+      position: relative;
+      background: linear-gradient(to bottom right, #cceeff, #e0f7ff);
+      /* Restore the solid background */
+      overflow: hidden;
+      /* Ensure the lines don't overflow */
+    }
+
+    .text-content {
+      max-width: 550px;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 30px rgba(0, 183, 255, 0.2);
+      z-index: 3;
+      /* Ensure content is above video */
+    }
+
+    .logo {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #0099cc;
+      margin-bottom: 20px;
+    }
+
+    .title {
+      font-size: 3.2rem;
+      font-weight: 800;
+      background: linear-gradient(to right, #00aaff, #33ccff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      margin-top: 20px;
+      line-height: 1.6;
+      color: #004d66;
+    }
+
+    .hero-scene {
+      position: relative;
+      width: 50%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3;
+      /* Ensure content is above video */
+    }
+
+    .earth {
+      position: absolute;
+      width: 480px;
+      height: 480px;
+      border-radius: 50%;
+      filter: brightness(1.1) contrast(1.2);
+      box-shadow: 0 0 40px #00ccff;
+      z-index: 1;
+      overflow: hidden;
+      /* Ensure video stays within circular boundary */
+    }
+
+    .earth video {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .glow-ring {
+      position: absolute;
+      width: 550px;
+      height: 550px;
+      border-radius: 50%;
+      border: 2px dashed #00cfff66;
+      animation: spin 20s linear infinite;
+      z-index: 0;
+    }
+
+    .connections {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .line {
+      position: absolute;
+      width: 2px;
+      height: 120px;
+      background: linear-gradient(to bottom, #00ccff, transparent);
+      opacity: 0.7;
+      animation: pulse 2s infinite alternate;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      background: #00ffff;
+      border-radius: 50%;
+      position: absolute;
+      animation: move 2s infinite linear;
+    }
+
+    .line1 {
+      top: 60px;
+      left: 250px;
+      transform: rotate(40deg);
+    }
+
+    .line2 {
+      top: 100px;
+      left: 150px;
+      transform: rotate(-30deg);
+    }
+
+    .line3 {
+      top: 180px;
+      left: 300px;
+      transform: rotate(60deg);
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        opacity: 0.3;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes move {
+      0% {
+        top: 0;
+      }
+
+      100% {
+        top: 120px;
+      }
+    }
+
+    @keyframes moveLine {
+      0% {
+        transform: translateX(-100%);
+      }
+
+      100% {
+        transform: translateX(100%);
+      }
+    }
+
+    @keyframes moveVerticalLine {
+      0% {
+        transform: translateY(-100%);
+      }
+
+      100% {
+        transform: translateY(100%);
+      }
+    }
+
+    .bg-lines {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    .bg-line {
+      position: absolute;
+      background: linear-gradient(90deg, transparent, rgba(0, 170, 255, 0.5), transparent);
+      height: 1px;
+      width: 100%;
+      animation: moveLine 15s infinite linear;
+    }
+
+    .bg-line:nth-child(1) {
+      top: 15%;
+      animation-duration: 15s;
+      animation-delay: 0s;
+    }
+
+    .bg-line:nth-child(2) {
+      top: 30%;
+      animation-duration: 18s;
+      animation-delay: 2s;
+    }
+
+    .bg-line:nth-child(3) {
+      top: 45%;
+      animation-duration: 20s;
+      animation-delay: 4s;
+    }
+
+    .bg-line:nth-child(4) {
+      top: 60%;
+      animation-duration: 22s;
+      animation-delay: 1s;
+    }
+
+    .bg-line:nth-child(5) {
+      top: 75%;
+      animation-duration: 25s;
+      animation-delay: 3s;
+    }
+
+    .bg-line:nth-child(6) {
+      top: 90%;
+      animation-duration: 17s;
+      animation-delay: 5s;
+    }
+
+    .bg-vertical-line {
+      position: absolute;
+      background: linear-gradient(0deg, transparent, rgba(0, 170, 255, 0.3), transparent);
+      width: 1px;
+      height: 100%;
+      animation: moveVerticalLine 20s infinite linear;
+    }
+
+    .bg-vertical-line:nth-child(7) {
+      left: 20%;
+      animation-duration: 19s;
+      animation-delay: 2s;
+    }
+
+    .bg-vertical-line:nth-child(8) {
+      left: 40%;
+      animation-duration: 23s;
+      animation-delay: 0s;
+    }
+
+    .bg-vertical-line:nth-child(9) {
+      left: 60%;
+      animation-duration: 21s;
+      animation-delay: 3s;
+    }
+
+    .bg-vertical-line:nth-child(10) {
+      left: 80%;
+      animation-duration: 17s;
+      animation-delay: 1s;
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 60px 20px;
+      }
+
+      .hero-scene {
+        width: 100%;
+        height: 300px;
+        margin-top: 40px;
+      }
+
+      .earth,
+      .glow-ring {
+        width: 300px;
+        height: 300px;
+      }
+
+      .services-container,
+      .team-container {
+        grid-template-columns: 1fr;
+      }
+
+      .wwd-container {
+        flex-direction: column-reverse;
+        text-align: center;
+      }
+
+      .wwd-image img {
+        max-width: 100%;
+      }
+
+      .mergers-container {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .mergers-text,
+      .mergers-image {
+        width: 100%;
+      }
+
+      .mergers-image img {
+        max-width: 100%;
+      }
+
+      .chat-panel {
+        width: 300px;
+        height: 400px;
+        bottom: 85px;
+      }
+    }
+
+    .what-we-do {
+      background: #f4faff;
+      padding: 80px 5%;
+      color: #003344;
+    }
+
+    .wwd-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 60px;
+      flex-wrap: wrap;
+      padding-top: 20px;
+    }
+
+    .wwd-image {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .wwd-image img {
+      width: 100%;
+      max-width: 500px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 150, 200, 0.2);
+      object-fit: cover;
+    }
+
+    .wwd-text {
+      flex: 1;
+      min-width: 300px;
+      max-width: 600px;
+    }
+
+    .wwd-text h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: #004466;
+    }
+
+    .wwd-text p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 16px;
+      color: #003344;
+    }
+
+    .mergers {
+      background: linear-gradient(to right, #eef6ff, #dceeff);
+      padding: 80px 5%;
+      color: #002b40;
+    }
+
+    .mergers-container {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 60px;
+    }
+
+    .mergers-text {
+      flex: 1;
+      min-width: 300px;
+      max-width: 600px;
+    }
+
+    .mergers-text h2 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: #003f5c;
+    }
+
+    .mergers-text h3 {
+      font-size: 1.5rem;
+      margin-top: 20px;
+      color: #005577;
+    }
+
+    .mergers-text ul {
+      list-style-type: disc;
+      padding-left: 20px;
+      margin-top: 10px;
+    }
+
+    .mergers-text li {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .mergers-image {
+      flex: 1;
+      min-width: 300px;
+      text-align: center;
+    }
+
+    .mergers-image img {
+      width: 100%;
+      max-width: 480px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 150, 255, 0.2);
+    }
+
+    /* Services Section Styles */
+    .services {
+      background: #e6f4ff;
+      padding: 80px 5%;
+      color: #003344;
+    }
+
+    .services-title {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 50px;
+      color: #004466;
+    }
+
+    .services-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .service-card {
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 5px 20px rgba(0, 150, 200, 0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 25px rgba(0, 150, 200, 0.25);
+    }
+
+    .service-icon {
+      font-size: 2.5rem;
+      color: #0099cc;
+      margin-bottom: 20px;
+    }
+
+    .service-title {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: #004466;
+    }
+
+    .service-description {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #003344;
+    }
+
+    /* Team Section Styles */
+    .team {
+      background: linear-gradient(to right, #f4f9ff, #e6f4ff);
+      padding: 80px 5%;
+      color: #003344;
+    }
+
+    .team-title {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 50px;
+      color: #004466;
+    }
+
+    .team-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .team-member {
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 5px 20px rgba(0, 150, 200, 0.15);
+      transition: transform 0.3s ease;
+    }
+
+    .team-member:hover {
+      transform: translateY(-10px);
+    }
+
+    .team-photo {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+
+    .team-info {
+      padding: 20px;
+    }
+
+    .team-name {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 5px;
+      color: #004466;
+    }
+
+    .team-position {
+      font-size: 1rem;
+      color: #0099cc;
+      margin-bottom: 15px;
+    }
+
+    .team-bio {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: #003344;
+    }
+
+    .team-social {
+      margin-top: 15px;
+      display: flex;
+      gap: 15px;
+    }
+
+    .team-social a {
+      color: #0099cc;
+      font-size: 1.2rem;
+      transition: color 0.3s ease;
+    }
+
+    .team-social a:hover {
+      color: #004d66;
+    }
+
+    /* Floating Contact Buttons */
+    .floating-contact {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      z-index: 999;
+    }
+
+    .contact-btn {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      color: white;
+      font-size: 24px;
+    }
+
+    .contact-btn:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .whatsapp-btn {
+      background-color: #25D366;
+    }
+
+    .chat-btn {
+      background-color: #0099cc;
+    }
+
+    /* Chat Panel */
+    .chat-panel {
+      position: fixed;
+      right: -400px;
+      bottom: 100px;
+      width: 350px;
+      height: 450px;
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      transition: right 0.4s ease;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      z-index: 998;
+    }
+
+    .chat-panel.active {
+      right: 20px;
+    }
+
+    .chat-header {
+      background-color: #0099cc;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chat-title {
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .close-chat {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .close-chat:hover {
+      transform: scale(1.1);
+    }
+
+    .chat-messages {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      background-color: #f5f7fa;
+    }
+
+    .message {
+      margin-bottom: 15px;
+      max-width: 85%;
+      padding: 10px 15px;
+      border-radius: 15px;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    .bot-message {
+      background-color: #e6f4ff;
+      color: #004466;
+      border-top-left-radius: 0;
+      align-self: flex-start;
+    }
+
+    .user-message {
+      background-color: #0099cc;
+      color: white;
+      border-top-right-radius: 0;
+      align-self: flex-end;
+      margin-left: auto;
+    }
+
+    .chat-input-container {
+      padding: 15px;
+      border-top: 1px solid #eaeaea;
+      display: flex;
+      gap: 10px;
+    }
+
+    .chat-input {
+      flex: 1;
+      padding: 10px 15px;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      outline: none;
+      font-family: 'Poppins', sans-serif;
+      resize: none;
+    }
+
+    .chat-input:focus {
+      border-color: #0099cc;
+    }
+
+    .send-btn {
+      background-color: #0099cc;
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .send-btn:hover {
+      background-color: #007aa3;
+    }
+
+    /* Add these CSS styles for the footer section */
+    .footer {
+      background: linear-gradient(to right, #003655, #00507a);
+      color: #fff;
+      padding: 60px 5% 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .footer-column h3 {
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+      color: #fff;
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    .footer-column h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 2px;
+      background: #0099cc;
+    }
+
+    .footer-column p,
+    .footer-column address {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 15px;
+      font-style: normal;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 12px;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      transition: color 0.3s ease, transform 0.3s ease;
+      display: inline-block;
+    }
+
+    .footer-links a:hover {
+      color: #0099cc;
+      transform: translateX(5px);
+    }
+
+    .contact-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .contact-info svg {
+      min-width: 18px;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      transition: all 0.3s ease;
+    }
+
+    .social-link:hover {
+      background: #0099cc;
+      transform: translateY(-3px);
+    }
+
+    .footer-bottom {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+    }
+
+    .footer-logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: white;
+      margin-bottom: 15px;
+    }
+
+    .footer-pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.1) 2px, transparent 2px);
+      background-size: 30px 30px;
+      opacity: 0.3;
+    }
+
+    @media (max-width: 768px) {
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .footer-column h3::after {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .footer-column {
+        text-align: center;
+      }
+
+      .contact-info {
+        justify-content: center;
+      }
+
+      .social-links {
+        justify-content: center;
+      }
+    }
+
+    /* Add these CSS styles for the Contact Us section */
+    .contact-section {
+      background: linear-gradient(135deg, #f4f9ff 0%, #e6f4ff 100%);
+      padding: 80px 5%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-section h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: #004466;
+    }
+
+    .contact-section p {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 50px;
+      color: #003344;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    .contact-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .contact-form-container {
+      flex: 1;
+      min-width: 300px;
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0, 150, 200, 0.15);
+    }
+
+    .contact-info-container {
+      flex: 1;
+      min-width: 300px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-group label {
+      font-weight: 600;
+      color: #004466;
+    }
+
+    .form-input,
+    .form-textarea {
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-family: 'Poppins', sans-serif;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      border-color: #0099cc;
+      box-shadow: 0 0 0 3px rgba(0, 153, 204, 0.2);
+      outline: none;
+    }
+
+    .form-textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .submit-btn {
+      background: linear-gradient(to right, #0099cc, #00aaff);
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 153, 204, 0.3);
+    }
+
+    .contact-card {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 20px rgba(0, 150, 200, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      transition: transform 0.3s ease;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .contact-card-icon {
+      background: rgba(0, 153, 204, 0.1);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #0099cc;
+    }
+
+    .contact-card-content h3 {
+      font-size: 1.1rem;
+      color: #004466;
+      margin-bottom: 5px;
+    }
+
+    .contact-card-content p,
+    .contact-card-content a {
+      color: #003344;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-card-content a:hover {
+      color: #0099cc;
+    }
+
+    .form-success {
+      display: none;
+      background-color: #dff2e3;
+      color: #276b39;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    .form-error {
+      display: none;
+      background-color: #f8d7da;
+      color: #721c24;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar Section -->
+  <nav class="navbar">
+    <a href="#" class="navbar-logo">TAGGART ADVISORS</a>
+    <div class="navbar-links">
+      <a href="#home">Home</a>
+      <a href="#what-we-do">What We Do</a>
+      <a href="#services">Services</a>
+      <a href="#mergers">M&A</a>
+      <a href="#team">Team</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <button class="mobile-menu-btn">☰</button>
+  </nav>
+
+  <div class="hero" id="home">
+    <!-- Add this div for animated background lines -->
+    <div class="bg-lines">
+      <div class="bg-line"></div>
+      <div class="bg-line"></div>
+      <div class="bg-line"></div>
+      <div class="bg-line"></div>
+      <div class="bg-line"></div>
+      <div class="bg-line"></div>
+      <div class="bg-vertical-line"></div>
+      <div class="bg-vertical-line"></div>
+      <div class="bg-vertical-line"></div>
+      <div class="bg-vertical-line"></div>
+    </div>
+
+    <div class="text-content">
+      <div class="logo">TAGGART ADVISORS</div>
+      <h1 class="title">Connecting Global Growth</h1>
+      <p class="subtitle">
+        At Taggart, we specialize in cross-border investments. Our insights and strategies connect businesses with
+        global opportunities and elevate your market reach across continents.
+      </p>
+    </div>
+
+    <div class="hero-scene">
+      <div class="glow-ring"></div>
+      <div class="earth">
+        <video autoplay muted loop playsinline>
+          <source src="21.mp4" type="video/mp4">
+          <!-- Fallback image if video doesn't load -->
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/600px-The_Earth_seen_from_Apollo_17.jpg"
+            alt="Earth">
+        </video>
+      </div>
+      <div class="connections">
+        <div class="line line1">
+          <div class="dot"></div>
+        </div>
+        <div class="line line2">
+          <div class="dot"></div>
+        </div>
+        <div class="line line3">
+          <div class="dot"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHAT WE DO SECTION STARTS -->
+  <section class="what-we-do" id="what-we-do">
+    <div class="wwd-container">
+      <div class="wwd-image">
+        <img src="https://cdn.pixabay.com/photo/2021/02/03/00/10/receptionists-5975962_1280.jpg" alt="Business People">
+      </div>
+      <div class="wwd-text">
+        <h2>What We Do</h2>
+        <p>
+          Taggart Advisors is an investment advisory firm that caters to mid-market transactions across the USA, Europe,
+          and India in the industrial sector.
+        </p>
+        <p>
+          On the <strong>buy side</strong>, we work with manufacturing conglomerates, industrial holding companies, and
+          private equity firms.
+        </p>
+        <p>
+          On the <strong>sell side</strong>, we collaborate with individual owners, banks, and private equity/financial
+          holding companies to ensure seamless transactions.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MERGERS & ACQUISITIONS SECTION -->
+  <section class="mergers" id="mergers">
+    <div class="mergers-container">
+      <div class="mergers-text">
+        <h2>Mergers & Acquisitions</h2>
+        <p><strong>Negotiations Lead By Qualified Engineers</strong></p>
+        <h3>BUY SIDE</h3>
+        <ul>
+          <li>We bring actionable proprietary deals in India and Europe</li>
+          <li>We lead acquisition process and negotiations</li>
+          <li>We provide Post-deal support</li>
+        </ul>
+
+        <h3>SELL SIDE</h3>
+        <ul>
+          <li>We have long-term relations with strategic investors</li>
+          <li>We provide access to investors in USA and Europe</li>
+          <li>We specialize in Plastic, Rubber and Gear sectors</li>
+        </ul>
+      </div>
+
+      <div class="mergers-image">
+        <img src="https://cdn.pixabay.com/photo/2016/06/28/05/10/laptop-1483974_1280.jpg" alt="Tech Illustration">
+        <img src="https://cdn.pixabay.com/photo/2016/03/19/04/05/ecology-1266173_1280.jpg" alt="Tech Image 2">
+      </div>
+    </div>
+  </section>
+
+
+  <section class="live-deals-imgbox">
+    <div class="deals-flex-container">
+      <!-- Left Side Images -->
+      <div class="deal-images">
+        <!-- Plastic Injection Molding -->
+        <img src="https://cdn.pixabay.com/photo/2015/09/25/12/26/syringe-957260_1280.jpg"
+          alt="Plastic Injection Molding" />
+        <img src="https://cdn.pixabay.com/photo/2022/05/19/07/48/aircraft-7206820_1280.jpg" alt="Aircraft Components" />
+
+        <!-- Automotive Interior -->
+        <img src="https://cdn.pixabay.com/photo/2015/07/20/00/57/vintage-car-852239_1280.jpg"
+          alt="Automotive Interior" />
+        <img src="https://cdn.pixabay.com/photo/2016/12/21/23/03/screw-1924174_1280.jpg" alt="Metal Machining" />
+
+      </div>
+
+      <!-- Right Side Text Box -->
+      <div class="deal-box sell-side">
+        <h3>Live Deals</h3>
+        <ul>
+          <li>€12mn plastic injection molding company</li>
+          <li>€30mn Medium Voltage Switchboard company</li>
+          <li>€45mn automotive interior parts – Injection molding</li>
+          <li>€7mn aircraft hydraulic components manufacturer</li>
+          <li>€10mn metal machining manufacturer</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+
+  <style>
+    .live-deals-imgbox {
+      padding: 80px 5%;
+      background: linear-gradient(to right, #f0faff, #e0f0ff);
+      color: #002b40;
+    }
+
+    .deals-flex-container {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 50px;
+    }
+
+    .deal-images {
+      flex: 1;
+      min-width: 300px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      max-width: 500px;
+    }
+
+    .deal-images img {
+      width: 100%;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 100, 160, 0.15);
+      transition: transform 0.3s ease;
+    }
+
+    .deal-images img:hover {
+      transform: scale(1.05);
+    }
+
+    .deal-box {
+      flex: 1;
+      min-width: 300px;
+      padding: 30px;
+      background: linear-gradient(to bottom right, #2c3e50, #3498db);
+      color: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(12px);
+    }
+
+    .deal-box h3 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+
+    .deal-box ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .deal-box li {
+      font-size: 1rem;
+      margin-bottom: 12px;
+      position: relative;
+      padding-left: 20px;
+      line-height: 1.6;
+    }
+
+    .deal-box li::before {
+      content: "▹";
+      position: absolute;
+      left: 0;
+      color: #ffffffcc;
+      font-size: 1.2rem;
+    }
+
+    @media (max-width: 768px) {
+      .deals-flex-container {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .deal-images {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .deal-box {
+        width: 100%;
+      }
+    }
+  </style>
+
+  <!-- SERVICES SECTION -->
+  <section class="services" id="services">
+    <h2 class="services-title">Our Services</h2>
+    <div class="services-container">
+      <div class="service-card">
+        <div class="service-icon">🔍</div>
+        <h3 class="service-title">Market Research</h3>
+        <p class="service-description">
+          Comprehensive analysis of industry trends, competitive landscapes, and market opportunities to guide your
+          strategic decisions.
+        </p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🤝</div>
+        <h3 class="service-title">Deal Structuring</h3>
+        <p class="service-description">
+          Expert guidance on optimal transaction structures to maximize value and minimize risks for all parties
+          involved.
+        </p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">📊</div>
+        <h3 class="service-title">Valuation Services</h3>
+        <p class="service-description">
+          Accurate business valuations using industry-standard methodologies tailored to your specific sector and
+          circumstances.
+        </p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">📝</div>
+        <h3 class="service-title">Due Diligence</h3>
+        <p class="service-description">
+          Thorough financial, operational, and legal examination to identify potential risks and opportunities in target
+          companies.
+        </p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🌍</div>
+        <h3 class="service-title">Cross-Border Advisory</h3>
+        <p class="service-description">
+          Specialized expertise in navigating international transactions, regulatory environments, and cultural
+          considerations.
+        </p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🚀</div>
+        <h3 class="service-title">Post-Merger Integration</h3>
+        <p class="service-description">
+          Strategic planning and implementation support to ensure smooth transitions and realize synergies after
+          transactions.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="services-offered">
+    <div class="services-background"></div>
+    <div class="services-container">
+      <!-- <h2 class="services-title">Services Offered</h2> -->
+
+      <div class="services-grid">
+
+        <!-- Western Europe -->
+        <div class="service-card">
+          <h3>Buy a company in Western Europe</h3>
+          <ul>
+            <li>Identify potential targets</li>
+            <li>Deal pre-screening</li>
+            <li>Management discussions and negotiations</li>
+            <li>Data room and due diligence management</li>
+            <li>Transaction structuring and post-merger integration</li>
+          </ul>
+          <p class="contact-email">michael.frank@taggartadvisors.com</p>
+        </div>
+
+        <!-- Eastern Europe -->
+        <div class="service-card">
+          <h3>Buy a company in Eastern Europe</h3>
+          <ul>
+            <li>Identify potential targets</li>
+            <li>Deal pre-screening</li>
+            <li>Management discussions and negotiations</li>
+            <li>Data room and due diligence management</li>
+            <li>Transaction structuring and post-merger integration</li>
+          </ul>
+          <p class="contact-email">Jiri.kotrbaty@taggartadvisors.com</p>
+        </div>
+
+        <!-- India Expansion -->
+        <div class="service-card">
+          <h3>Expand your business in India</h3>
+          <ul>
+            <li>Market Entry Strategy</li>
+            <li>Identifying potential partners</li>
+            <li>Administration support</li>
+            <li>Project Management Office (PMO)</li>
+          </ul>
+          <p class="contact-email">anushree.asthana@taggartadvisors.com</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .services-offered {
+      position: relative;
+      padding: 100px 5%;
+      background: linear-gradient(to bottom right, #f2f9ff, #e8f4ff);
+      overflow: hidden;
+    }
+
+    .services-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://cdn.pixabay.com/photo/2019/03/20/22/37/business-4068304_1280.jpg') no-repeat center/cover;
+      opacity: 0.08;
+      z-index: 1;
+    }
+
+    .services-container {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .services-title {
+      text-align: center;
+      font-size: 2.8rem;
+      color: #00334d;
+      margin-bottom: 60px;
+      font-weight: 700;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 40px;
+    }
+
+    .service-card {
+      background: #ffffffcc;
+      backdrop-filter: blur(8px);
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 132, 255, 0.1);
+      padding: 30px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid rgba(0, 183, 255, 0.1);
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 132, 255, 0.2);
+    }
+
+    .service-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      color: #00557a;
+    }
+
+    .service-card ul {
+      padding-left: 20px;
+      margin-bottom: 15px;
+    }
+
+    .service-card li {
+      margin-bottom: 10px;
+      font-size: 1rem;
+      color: #003a57;
+      line-height: 1.5;
+    }
+
+    .contact-email {
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: #0077aa;
+      margin-top: 10px;
+      word-break: break-all;
+    }
+
+    @media (max-width: 768px) {
+      .services-title {
+        font-size: 2.2rem;
+      }
+
+      .service-card {
+        padding: 20px;
+      }
+    }
+  </style>
+
+  <section class="team-section">
+    <div class="team-header">
+      <h2>Meet Our Team</h2>
+    </div>
+    <div class="team-grid">
+
+      <!-- Rajesh Arora -->
+      <div class="team-card">
+        <img src="https://www.taggartadvisors.com/assets/img/team/director.jpeg" alt="Rajesh Arora">
+        <h3>Rajesh Arora</h3>
+        <p>Director</p>
+        <div class="team-links">
+          <a href="mailto:rajesh.arora@taggartadvisors.com" title="Email">📧</a>
+          <a href="https://www.linkedin.com/in/r-k-arora-30119b11/" target="_blank" title="LinkedIn">
+            <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn">
+          </a>
+        </div>
+      </div>
+
+      <!-- Sumit Arora -->
+      <div class="team-card">
+        <img src="https://www.taggartadvisors.com/assets/img/team/sumit.jpeg" alt="Sumit Arora">
+        <h3>Sumit Arora</h3>
+        <p>Managing Director</p>
+        <div class="team-links">
+          <a href="mailto:sumit.arora@taggartadvisors.com">📧</a>
+          <a href="https://www.linkedin.com/in/sumit-a-416b2410/" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png">
+          </a>
+        </div>
+      </div>
+
+      <!-- Michael Frank -->
+      <div class="team-card">
+        <img src="https://www.taggartadvisors.com/assets/img/team/michel.jpeg" alt="Michael Frank">
+        <h3>Michael Frank</h3>
+        <p>Partner, USA</p>
+        <div class="team-links">
+          <a href="mailto:michael.frank@taggartadvisors.com">📧</a>
+          <a href="https://www.linkedin.com/in/michael-frank" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png">
+          </a>
+        </div>
+      </div>
+
+      <!-- Jiri Kotrbaty -->
+      <div class="team-card">
+        <img src="https://www.taggartadvisors.com/assets/img/team/Jiri.jpeg" alt="Jiri Kotrbaty">
+        <h3>Jiri Kotrbaty</h3>
+        <p>Partner, Europe</p>
+        <div class="team-links">
+          <a href="mailto:jiri.kotrbaty@taggartadvisors.com">📧</a>
+          <a href="https://www.linkedin.com/in/jiri-kotrbaty-b3343336/" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png">
+          </a>
+        </div>
+      </div>
+
+      <!-- Anton Frlic -->
+      <div class="team-card">
+        <img src="https://www.taggartadvisors.com/assets/img/team/anton.jpeg" alt="Anton Frlic">
+        <h3>Anton Frlic</h3>
+        <p>Partner, Slovenia</p>
+        <div class="team-links">
+          <a href="mailto:anton.frlic@taggartadvisors.com">📧</a>
+          <a href="https://www.linkedin.com/in/frlic-anton-7289682b/" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png">
+          </a>
+        </div>
+      </div>
+
+      <!-- Anshu Raj -->
+      <div class="team-card">
+        <img src="https://www.taggartadvisors.com/assets/img/team/Anshu1.jpeg" alt="Anshu Raj">
+        <h3>Anshu Raj</h3>
+        <p>Analyst</p>
+        <div class="team-links">
+          <a href="mailto:anshu.raj@taggartadvisors.com">📧</a>
+          <a href="https://www.linkedin.com/in/anshu-raj" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png">
+          </a>
+        </div>
+      </div>
+
+      <!-- Anushree Asthana -->
+      <div class="team-card">
+        <img src="https://www.taggartadvisors.com/assets/img/team/Anushree.jpeg" alt="Anushree Asthana">
+        <h3>Anushree Asthana</h3>
+        <p>Analyst</p>
+        <div class="team-links">
+          <a href="mailto:anushree.asthana@taggartadvisors.com">📧</a>
+          <a href="https://www.linkedin.com/in/anushree-asthana" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png">
+          </a>
+        </div>
+      </div>
+
+      <!-- Joanna Michalak -->
+      <div class="team-card">
+        <img src="https://www.taggartadvisors.com/assets/img/team/joanna.jpeg" alt="Joanna Michalak">
+        <h3>Joanna Michalak</h3>
+        <p>Analyst</p>
+        <div class="team-links">
+          <a href="mailto:joanna.michalak@taggartadvisors.com">📧</a>
+          <a href="https://www.linkedin.com/in/joanna-michalak" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png">
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <style>
+    .team-section {
+      padding: 100px 5%;
+      background: linear-gradient(to right, #eaf4fb, #f3fbfe);
+      color: #003f5c;
+    }
+
+    .team-header h2 {
+      text-align: center;
+      font-size: 2.8rem;
+      margin-bottom: 60px;
+      color: #004c70;
+      text-shadow: 0 0 10px rgba(0, 76, 112, 0.1);
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 30px;
+      max-width: 1300px;
+      margin: auto;
+    }
+
+    .team-card {
+      background: #ffffffd9;
+      border-radius: 16px;
+      padding: 30px 20px;
+      text-align: center;
+      transition: 0.3s ease-in-out;
+      box-shadow: 0 8px 20px rgba(0, 76, 112, 0.1);
+    }
+
+    .team-card:hover {
+      transform: translateY(-10px);
+      background-color: #fff;
+      box-shadow: 0 12px 28px rgba(0, 76, 112, 0.2);
+    }
+
+    .team-card img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin-bottom: 15px;
+      object-fit: cover;
+      border: 3px solid #00aaff44;
+    }
+
+    .team-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 5px;
+    }
+
+    .team-card p {
+      color: #006688;
+      font-weight: 500;
+    }
+
+    .team-links {
+      margin-top: 12px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .team-links a img {
+      width: 20px;
+      height: 20px;
+    }
+
+    .team-links a {
+      font-size: 1.2rem;
+      color: #005577;
+      text-decoration: none;
+    }
+  </style>
+
+
+  <!-- Floating Contact Buttons -->
+  <div class="floating-contact">
+    <div class="contact-btn whatsapp-btn" id="whatsapp-btn" title="Connect on WhatsApp">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white">
+        <path
+          d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.72.045.419-.1.824zm-3.423-14.416c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964.984-3.595c-.607-1.052-.927-2.246-.926-3.468.001-3.825 3.113-6.937 6.937-6.937 1.856.001 3.598.723 4.907 2.034 1.31 1.311 2.031 3.054 2.03 4.908-.001 3.825-3.113 6.938-6.937 6.938z" />
+      </svg>
+    </div>
+    <div class="contact-btn chat-btn" id="chat-btn" title="Live Chat">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white">
+        <path
+          d="M12 1c-6.338 0-12 4.226-12 10.007 0 2.05.739 4.063 2.047 5.625.055 1.83-1.023 4.456-1.993 6.368 2.602-.47 6.301-1.508 7.978-2.536 9.236 2.247 15.968-3.405 15.968-9.457 0-5.812-5.701-10.007-12-10.007zm-5 11.5c-.829 0-1.5-.671-1.5-1.5s.671-1.5 1.5-1.5 1.5.671 1.5 1.5-.671 1.5-1.5 1.5zm5 0c-.829 0-1.5-.671-1.5-1.5s.671-1.5 1.5-1.5 1.5.671 1.5 1.5-.671 1.5-1.5 1.5zm5 0c-.828 0-1.5-.671-1.5-1.5s.672-1.5 1.5-1.5 1.5.671 1.5 1.5-.672 1.5-1.5 1.5z" />
+      </svg>
+    </div>
+  </div>
+
+  <!-- Chat Panel -->
+  <div class="chat-panel" id="chat-panel">
+    <div class="chat-header">
+      <div class="chat-title">Taggart Advisors Support</div>
+      <button class="close-chat" id="close-chat">×</button>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+      <div class="message bot-message">
+        Hello! Welcome to Taggart Advisors. How can we help you today?
+      </div>
+    </div>
+    <div class="chat-input-container">
+      <textarea class="chat-input" id="chat-input" placeholder="Type your message..." rows="1"></textarea>
+      <button class="send-btn" id="send-message">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="white">
+          <path
+            d="M24 0l-6 22-8.129-7.239 7.802-8.234-10.458 7.227-7.215-1.754 24-12zm-15 16.668v7.332l3.258-4.431-3.258-2.901z" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- CONTACT US SECTION -->
+  <section class="contact-section" id="contact-us">
+    <h2>Contact Us</h2>
+    <p>Have questions or ready to discuss your investment strategy? Reach out to our expert team for personalized
+      assistance.</p>
+
+    <div class="contact-container">
+      <div class="contact-form-container">
+        <div class="form-success" id="form-success">
+          Thank you for your message! Our team will get back to you shortly.
+        </div>
+        <div class="form-error" id="form-error">
+          Oops! Something went wrong. Please try again or contact us directly.
+        </div>
+
+        <form class="contact-form" id="contact-form">
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" class="form-input" placeholder="Your name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" class="form-input" placeholder="Your email address" required>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" class="form-input" placeholder="Your phone number">
+          </div>
+
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <select id="subject" class="form-input" required>
+              <option value="" disabled selected>Select a subject</option>
+              <option value="Investment Advisory">Investment Advisory</option>
+              <option value="M&A Services">M&A Services</option>
+              <option value="Cross-Border Transactions">Cross-Border Transactions</option>
+              <option value="Due Diligence">Due Diligence</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" class="form-textarea" placeholder="Tell us about your needs" required></textarea>
+          </div>
+
+          <button type="submit" class="submit-btn">Send Message</button>
+        </form>
+      </div>
+
+      <div class="contact-info-container">
+        <div class="contact-card">
+          <div class="contact-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 0c-4.198 0-8 3.403-8 7.602 0 4.198 3.469 9.21 8 16.398 4.531-7.188 8-12.2 8-16.398 0-4.199-3.801-7.602-8-7.602zm0 11c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z" />
+            </svg>
+          </div>
+          <div class="contact-card-content">
+            <h3>Our Address</h3>
+            <p>123 Financial District, New York, NY 10005, USA</p>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M20 4h-16c-1.105 0-2 .895-2 2v12c0 1.105.895 2 2 2h16c1.105 0 2-.895 2-2v-12c0-1.105-.895-2-2-2zm0 4.236l-8 4.882-8-4.882v-2.236l8 4.882 8-4.882v2.236z" />
+            </svg>
+          </div>
+          <div class="contact-card-content">
+            <h3>Email Us</h3>
+            <a href="mailto:contact@taggartadvisors.com">contact@taggartadvisors.com</a>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M20 22.621l-3.521-6.795c-.008.004-1.974.97-2.064 1.011-2.24 1.086-6.799-7.82-4.609-8.994l2.083-1.026-3.493-6.817-2.106 1.039c-7.202 3.755 4.233 25.982 11.6 22.615.121-.055 2.102-1.029 2.11-1.033z" />
+            </svg>
+          </div>
+          <div class="contact-card-content">
+            <h3>Call Us</h3>
+            <a href="tel:+15551234567">+1 (555) 123-4567</a>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm1 12v-6h-2v8h7v-2h-5z" />
+            </svg>
+          </div>
+          <div class="contact-card-content">
+            <h3>Business Hours</h3>
+            <p>Monday - Friday: 9:00 AM - 6:00 PM EST</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer class="footer" id="contact">
+    <div class="footer-pattern"></div>
+    <div class="footer-content">
+      <div class="footer-column">
+        <div class="footer-logo">TAGGART ADVISORS</div>
+        <p>Connecting businesses globally through strategic investments and expert advisory services. Our cross-border
+          expertise helps you navigate complex markets with confidence.</p>
+        <div class="social-links">
+          <a href="#" class="social-link" title="LinkedIn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z" />
+            </svg>
+          </a>
+          <a href="#" class="social-link" title="Twitter">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
+            </svg>
+          </a>
+          <a href="#" class="social-link" title="Facebook">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
+            </svg>
+          </a>
+          <a href="#" class="social-link" title="Instagram">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-column">
+        <h3>Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#what-we-do">What We Do</a></li>
+          <li><a href="#services">Our Services</a></li>
+          <li><a href="#mergers">Mergers & Acquisitions</a></li>
+          <li><a href="#team">Our Team</a></li>
+          <li><a href="#contact">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h3>Our Services</h3>
+        <ul class="footer-links">
+          <li><a href="#services">Market Research</a></li>
+          <li><a href="#services">Deal Structuring</a></li>
+          <li><a href="#services">Valuation Services</a></li>
+          <li><a href="#services">Due Diligence</a></li>
+          <li><a href="#services">Cross-Border Advisory</a></li>
+          <li><a href="#services">Post-Merger Integration</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h3>Contact Us</h3>
+        <address>
+          <div class="contact-info">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 0c-4.198 0-8 3.403-8 7.602 0 4.198 3.469 9.21 8 16.398 4.531-7.188 8-12.2 8-16.398 0-4.199-3.801-7.602-8-7.602zm0 11c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z" />
+            </svg>
+            <span>123 Financial District, New York, NY 10005, USA</span>
+          </div>
+          <div class="contact-info">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M20 4h-16c-1.105 0-2 .895-2 2v12c0 1.105.895 2 2 2h16c1.105 0 2-.895 2-2v-12c0-1.105-.895-2-2-2zm0 4.236l-8 4.882-8-4.882v-2.236l8 4.882 8-4.882v2.236z" />
+            </svg>
+            <span>contact@taggartadvisors.com</span>
+          </div>
+          <div class="contact-info">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M20 22.621l-3.521-6.795c-.008.004-1.974.97-2.064 1.011-2.24 1.086-6.799-7.82-4.609-8.994l2.083-1.026-3.493-6.817-2.106 1.039c-7.202 3.755 4.233 25.982 11.6 22.615.121-.055 2.102-1.029 2.11-1.033z" />
+            </svg>
+            <span>+1 (555) 123-4567</span>
+          </div>
+        </address>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2023 Taggart Advisors. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Add JavaScript for functionality -->
+  <script>
+    // Initialize all interactive elements once the DOM is fully loaded
+    document.addEventListener('DOMContentLoaded', function () {
+      // Navbar elements
+      const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+      const navbarLinks = document.querySelector('.navbar-links');
+
+      // Chat elements
+      const chatBtn = document.getElementById('chat-btn');
+      const whatsappBtn = document.getElementById('whatsapp-btn');
+      const chatPanel = document.getElementById('chat-panel');
+      const closeChat = document.getElementById('close-chat');
+      const chatMessages = document.getElementById('chat-messages');
+      const sendMessage = document.getElementById('send-message');
+
+      // Mobile menu toggle
+      mobileMenuBtn.addEventListener('click', () => {
+        navbarLinks.classList.toggle('active');
+      });
+
+      // Navbar scroll effect
+      window.addEventListener('scroll', () => {
+        const navbar = document.querySelector('.navbar');
+        if (window.scrollY > 50) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
+      });
+
+      // Chat button click event
+      chatBtn.addEventListener('click', function () {
+        if (chatPanel.classList.contains('active')) {
+          chatPanel.classList.remove('active');
+          whatsappBtn.style.display = 'flex';
+        } else {
+          chatPanel.classList.add('active');
+          whatsappBtn.style.display = 'none';
+        }
+      });
+
+      // Close chat panel
+      closeChat.addEventListener('click', function () {
+        chatPanel.classList.remove('active');
+        whatsappBtn.style.display = 'flex';
+      });
+
+      // Send message function
+      const sendChatMessage = () => {
+        const chatInput = document.getElementById('chat-input');
+        const message = chatInput.value.trim();
+        if (message) {
+          // Add user message
+          appendMessage(message, 'user-message');
+          chatInput.value = '';
+
+          // Simulate bot response after a short delay
+          setTimeout(() => {
+            const botResponse = getBotResponse(message);
+            appendMessage(botResponse, 'bot-message');
+          }, 1000);
+        }
+      };
+
+      // Send message when clicking send button
+      sendMessage.addEventListener('click', sendChatMessage);
+
+      // Send message when pressing Enter key
+      chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          sendChatMessage();
+        }
+      });
+
+      // Open WhatsApp when clicking the WhatsApp button
+      whatsappBtn.addEventListener('click', () => {
+        // Replace with your actual WhatsApp number
+        const phoneNumber = '+123456789';
+        const message = 'Hello! I would like to know more about Taggart Advisors services.';
+
+        // Create WhatsApp URL
+        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+        // Open in new tab
+        window.open(whatsappUrl, '_blank');
+      });
+
+      // Contact form submission
+      const contactForm = document.getElementById('contact-form');
+      const formSuccess = document.getElementById('form-success');
+      const formError = document.getElementById('form-error');
+
+      contactForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Simple form validation
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const message = document.getElementById('message').value.trim();
+
+        if (name === '' || email === '' || message === '') {
+          formError.style.display = 'block';
+          formError.textContent = 'Please fill in all fields.';
+          formSuccess.style.display = 'none';
+          return;
+        }
+
+        formError.style.display = 'none';
+
+        // Simulate form submission
+        setTimeout(() => {
+          formSuccess.style.display = 'block';
+          contactForm.reset();
+        }, 1000);
+      });
+
+      // Append message to chat
+      const appendMessage = (text, className) => {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${className}`;
+        messageDiv.textContent = text;
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      };
+
+      // Get bot response based on user input
+      const getBotResponse = (message) => {
+        message = message.toLowerCase();
+
+        if (message.includes('hello') || message.includes('hi')) {
+          return "Hello there! How can I assist you with your investment advisory needs?";
+        } else if (message.includes('services')) {
+          return "We offer a range of services including Market Research, Deal Structuring, Valuation Services, Due Diligence, Cross-Border Advisory, and Post-Merger Integration. Would you like to know more about any specific service?";
+        } else if (message.includes('contact')) {
+          return "You can reach our team at contact@taggartadvisors.com or call us at +1 (555) 123-4567.";
+        } else if (message.includes('location') || message.includes('address') || message.includes('office')) {
+          return "We have offices in New York, London, and Mumbai. Would you like specific address details?";
+        } else {
+          return "Thank you for your message. One of our advisors will get back to you shortly. If you need immediate assistance, please call us at +1 (555) 123-4567.";
+        }
+      };
+    });
+  </script>
+</body>
+
+</html>
